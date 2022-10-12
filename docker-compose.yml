@@ -1,0 +1,33 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+  shoponlineweb:
+    image: shoponlineweb
+    build:
+      context: .
+      dockerfile: ShopOnline.Web/Dockerfile
+    ports:
+      - 5232:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5232;http://+:5232;
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=lol
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx  
+  shoponlineapi:
+    image: shoponlineapi
+    build:
+      context: .
+      dockerfile: ShopOnline.WebAPI/Dockerfile
+    ports:
+      - 7232:443
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7232;http://+:7232;
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=lol
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx    
+
+    
+
+
