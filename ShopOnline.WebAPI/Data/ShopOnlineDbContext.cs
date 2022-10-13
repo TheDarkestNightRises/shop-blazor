@@ -6,9 +6,11 @@ namespace ShopOnline.WebAPI.Data
 {
     public class ShopOnlineDbContext:DbContext
     {
+        public ShopOnlineDbContext(DbContextOptions options) : base(options) {}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=my_db;Port=5432;Username=my_user;Password=lol");
+            optionsBuilder.UseNpgsql();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

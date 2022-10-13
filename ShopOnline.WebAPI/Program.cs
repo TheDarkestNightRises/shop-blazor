@@ -15,7 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddDbContext<ShopOnlineDbContext>();
+builder.Services.AddDbContext<ShopOnlineDbContext>(
+    context => context.UseNpgsql(builder.Configuration.GetConnectionString("ShopDB"))
+    );
 
 var app = builder.Build();
 
