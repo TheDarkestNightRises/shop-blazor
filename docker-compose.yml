@@ -3,6 +3,8 @@ version: '3.4'
 services:
   shoponlineweb:
     image: shoponlineweb
+    networks:
+      - api
     build:
       context: .
       dockerfile: ShopOnline.Web/Dockerfile
@@ -10,39 +12,42 @@ services:
       - "5232:80"
     environment:
       - ASPNETCORE_ENVIRONMENT="Development"
-      - ASPNETCORE_URLS="https://+:443;http://+:80"
-      - ASPNETCORE_Kestrel__Certificates__Default__Password="lol"
-      - ASPNETCORE_Kestrel__Certificates__Default__Path="/https/localhost.pfx"
+      - ASPNETCORE_HTTPS_PORT="5232"
+      - ASPNETCORE_URLS="https://+5232;http://+5232"
+      - ASPNETCORE_Kestrel__Certificates__Default__Path="/https/ShopOnline.WebAPI.pfx"
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
     volumes:
-      - ~/.aspnet/https:/https:ro
-      
+      - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
 
   shoponlineapi:
-    image: shoponlineapi
-    build:
+    networks:
+      - api
+    build:       
       context: .
-      dockerfile: "ShopOnline.WebAPI/Dockerfile"
-    depends_on:
-      - "database"
+      dockerfile: ShopOnline.WebAPI/Dockerfile
     ports:
-      - "7142:443"
+    - "7142:443"
     environment:
-      - ASPNETCORE_ENVIRONMENT="Development"
-      - ASPNETCORE_URLS="https://+:443;http://+:80"
-      - ASPNETCORE_Kestrel__Certificates__Default__Password="lol"
-      - ASPNETCORE_Kestrel__Certificates__Default__Path="/https/localhost.pfx"
+      - ASPNETCORE_HTTPS_PORT= "7142"
+      - ASPNETCORE_ENVIRONMENT= Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/ 
 
   database:
     container_name: postgres
     image: "postgres"
     restart: always
     ports:
-       - 5432:5432
+       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: lol
 
+networks:    
+  api:
+    driver: bridge
 
     
 

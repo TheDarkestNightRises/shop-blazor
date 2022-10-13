@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using ShopOnline.WebAPI.Data;
@@ -24,14 +25,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseCors(policy =>
-    policy.WithOrigins("http://localhost:5232", "https://localhost:5232")
+    policy.WithOrigins("0.0.0.0:5232", "https://localhost:5232")
     .AllowAnyMethod()
     .WithHeaders(HeaderNames.ContentType)
 );
-
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
