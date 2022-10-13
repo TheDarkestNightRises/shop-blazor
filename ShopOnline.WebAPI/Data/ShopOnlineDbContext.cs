@@ -13,6 +13,8 @@ namespace ShopOnline.WebAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            Database.Migrate();
+
             base.OnModelCreating(modelBuilder);
             //Products
             //Beauty Category
