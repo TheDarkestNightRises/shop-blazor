@@ -8,7 +8,7 @@ namespace ShopOnline.WebAPI.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data source = D:\S3\Blazor\ShopOnline.Web\ShopOnline.WebAPI\Data\Todo.db");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=my_db;Port=5432;Username=my_user;Password=lol");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

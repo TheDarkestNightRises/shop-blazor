@@ -3,14 +3,18 @@
 version: '3.4'
 
 services:
-  shoponlineweb:
-    image: shoponlineweb
+  shoponlineapi:
+    image: shoponlineapi
     build:
       context: .
-      dockerfile: ShopOnline.Web/Dockerfile
+      dockerfile: ShopOnline.WebAPI/Dockerfile
     ports:
-      - 5232:5232
+      - 7142:443
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7142;http://+:7142;
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=lol
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     volumes:
-      - ~/.vsdbg:/remote_debugger:rw
+      - ~/.aspnet/https:/https:ro  
+      

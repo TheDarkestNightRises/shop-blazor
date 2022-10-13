@@ -18,7 +18,7 @@ WORKDIR "/src/ShopOnline.WebAPI"
 RUN dotnet build "ShopOnline.WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ShopOnline.WebAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ShopOnline.WebAPI.csproj" -c Release -o /app/publish 
 
 FROM base AS final
 WORKDIR /app
