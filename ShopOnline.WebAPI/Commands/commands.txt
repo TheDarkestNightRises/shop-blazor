@@ -1,0 +1,11 @@
+#Delete any .net cert if you have any.
+dotnet dev-certs --clean
+
+#Set up your dev-certs 
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\ShopOnline.WebAPI.pfx -p password
+
+#Trust dev-cert 
+dotnet dev-certs --trust
+
+#Store your cert pass as a secret
+dotnet user-secrets set "Kestrel:Certificates:Development:Password" "password"
