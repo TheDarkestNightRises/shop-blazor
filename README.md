@@ -24,7 +24,7 @@ You can check the documentation inside of the project.
 
 **Server:** C# 
 
-**Database**: EFCore, SqlLite
+**Database**: EFCore, Postgres
 
 
 ## Screenshots
